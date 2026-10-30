@@ -458,63 +458,240 @@
       color: #ffffff;
     }
 
-    /* Results Banner Modal */
-    .results-panel {
-      margin-top: 16px;
-      width: 100%;
-      max-width: 1100px;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 12px;
-      padding: 16px 20px;
+    /* Centered Epic Gamer Victory Modal Overlay */
+    .results-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 15, 30, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
       display: none;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
 
-    .results-panel.visible {
-      display: block;
-      animation: fadeIn 0.3s ease-out;
+    .results-modal-overlay.visible {
+      display: flex;
+      animation: popInModal 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes popInModal {
+      0% { opacity: 0; transform: scale(0.75) translateY(40px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 10px;
-    }
-
-    .result-box {
-      background: #0f172a;
-      border-radius: 8px;
-      padding: 12px;
+    .gamer-card-container {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      background: linear-gradient(165deg, #1e293b, #0f172a 70%, #020617);
+      border: 3px solid #facc15;
+      border-radius: 24px;
+      padding: 28px 24px;
       text-align: center;
-      border: 1px solid #334155;
+      box-shadow: 0 0 60px rgba(250, 204, 21, 0.45), 0 25px 50px rgba(0,0,0,0.85);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .result-rank {
-      font-size: 0.8rem;
+    .sunburst-bg {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 520px;
+      height: 520px;
+      background: repeating-conic-gradient(from 0deg, rgba(250, 204, 21, 0.08) 0deg 15deg, transparent 15deg 30deg);
+      border-radius: 50%;
+      animation: rotateRays 24s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes rotateRays {
+      from { transform: translateX(-50%) rotate(0deg); }
+      to { transform: translateX(-50%) rotate(360deg); }
+    }
+
+    .trophy-badge {
+      font-size: 4rem;
+      margin-bottom: 2px;
+      position: relative;
+      z-index: 5;
+      animation: floatTrophy 2.2s infinite ease-in-out alternate;
+      filter: drop-shadow(0 8px 16px rgba(250, 204, 21, 0.6));
+    }
+
+    @keyframes floatTrophy {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-8px) scale(1.08); }
+    }
+
+    .gamer-title {
+      font-size: 2.1rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      font-weight: 800;
-      color: #94a3b8;
+      background: linear-gradient(135deg, #fef08a, #facc15 40%, #fb923c 80%, #ef4444);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 4px 20px rgba(250, 204, 21, 0.4);
+      position: relative;
+      z-index: 5;
+      margin-bottom: 6px;
     }
 
-    .result-name {
-      font-size: 1.1rem;
+    .gamer-subtitle {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      font-weight: 600;
+      position: relative;
+      z-index: 5;
+      margin-bottom: 20px;
+      max-width: 540px;
+      line-height: 1.4;
+    }
+
+    /* 3D Olympic Gamer Podium Layout */
+    .gamer-podium-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr 1fr;
+      gap: 12px;
+      width: 100%;
+      align-items: flex-end;
+      position: relative;
+      z-index: 5;
+      margin-bottom: 22px;
+    }
+
+    .podium-col {
+      background: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 16px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    .podium-col.rank-1 {
+      border-color: #facc15;
+      background: linear-gradient(160deg, #1e293b, #0f172a);
+      box-shadow: 0 0 25px rgba(250, 204, 21, 0.35);
+      transform: translateY(-10px);
+      padding: 18px 12px;
+    }
+
+    .podium-col.rank-2 {
+      border-color: #38bdf8;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+    }
+
+    .podium-col.rank-3 {
+      border-color: #64748b;
+    }
+
+    .podium-crown {
+      font-size: 1.6rem;
+      margin-bottom: -4px;
+      animation: crownBounce 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes crownBounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-4px); }
+    }
+
+    .podium-rank-badge {
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .podium-name {
+      font-size: 1.02rem;
       font-weight: 800;
       color: #f8fafc;
-      margin: 4px 0;
+      margin-bottom: 4px;
     }
 
-    .result-time {
-      font-size: 1.5rem;
+    .podium-time {
+      font-size: 1.7rem;
       font-weight: 900;
       font-family: 'Courier New', monospace;
       color: #facc15;
+      margin-bottom: 4px;
+    }
+
+    .podium-col.rank-2 .podium-time {
+      color: #38bdf8;
+    }
+
+    .podium-col.rank-3 .podium-time {
+      color: #94a3b8;
+    }
+
+    .podium-delta {
+      font-size: 0.74rem;
+      font-weight: 800;
+      border-radius: 9999px;
+      padding: 3px 8px;
+      background: rgba(0,0,0,0.3);
+    }
+
+    /* Modal Gamer Actions */
+    .gamer-modal-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .gamer-btn-primary {
+      padding: 12px 32px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(135deg, #facc15, #f59e0b 50%, #ea580c);
+      color: #0f172a;
+      box-shadow: 0 0 24px rgba(250, 204, 21, 0.6), 0 6px 16px rgba(0,0,0,0.4);
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .gamer-btn-primary:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 0 35px rgba(250, 204, 21, 0.8), 0 8px 22px rgba(0,0,0,0.5);
+    }
+
+    .gamer-btn-close {
+      padding: 11px 22px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border: 1px solid #475569;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #1e293b;
+      color: #94a3b8;
+      transition: all 0.2s;
+    }
+
+    .gamer-btn-close:hover {
+      background: #334155;
+      color: #ffffff;
     }
 
     /* Subagent QA Tester Tray (collapsible) */
@@ -756,34 +933,46 @@
     </div>
   </div>
 
-  <!-- Results Board with Podiums & Exact Timing Splits -->
-  <div class="results-panel" id="resultsPanel">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-      <div>
-        <div style="font-size: 1.15rem; font-weight: 900; color: #facc15;" id="resultHeadline">Race Finish Recorded</div>
-        <div style="font-size: 0.82rem; color: #94a3b8;" id="resultSubheadline">Timing comparison across all 3 racers</div>
+  <!-- Centered Gamer Victory Modal Overlay -->
+  <div class="results-modal-overlay" id="resultsPanel">
+    <div class="gamer-card-container">
+      <div class="sunburst-bg" id="sunburstBg"></div>
+      <div class="trophy-badge" id="trophyBadge">🏆</div>
+      <h2 class="gamer-title" id="resultHeadline">VICTORY ROYALE!</h2>
+      <p class="gamer-subtitle" id="resultSubheadline">Timing comparison across all 3 racers</p>
+      
+      <!-- 3-Column Olympic Podium Layout -->
+      <div class="gamer-podium-grid" id="resultsPodiumGrid">
+        <!-- 2nd Place (Left) -->
+        <div class="podium-col rank-2" id="resBox2">
+          <div class="podium-rank-badge" id="resRank2" style="color: #38bdf8;">🥈 2ND PLACE</div>
+          <div class="podium-name" id="resName2">Pacesetter #2</div>
+          <div class="podium-time" id="resTime2">4.70s</div>
+          <div class="podium-delta" id="resDelta2" style="color: #38bdf8;">+1.30s behind Cheetah</div>
+        </div>
+
+        <!-- 1st Place (Center - Crowned) -->
+        <div class="podium-col rank-1" id="resBox1">
+          <div class="podium-crown" id="podiumCrown">👑</div>
+          <div class="podium-rank-badge" id="resRank1" style="color: #facc15;">🥇 1ST PLACE</div>
+          <div class="podium-name" id="resName1">Agile Cheetah</div>
+          <div class="podium-time" id="resTime1">3.40s</div>
+          <div class="podium-delta" id="resDelta1" style="color: #4ade80;">WINNER (-1.30s)</div>
+        </div>
+
+        <!-- 3rd Place (Right) -->
+        <div class="podium-col rank-3" id="resBox3">
+          <div class="podium-rank-badge" id="resRank3" style="color: #94a3b8;">🥉 3RD PLACE</div>
+          <div class="podium-name" id="resName3">Challenger #3</div>
+          <div class="podium-time" id="resTime3">5.20s</div>
+          <div class="podium-delta" id="resDelta3" style="color: #94a3b8;">+1.80s behind Cheetah</div>
+        </div>
       </div>
-      <button class="btn btn-secondary" id="resultsResetBtn" style="padding: 6px 14px; font-size: 0.82rem;">↺ Reset Track</button>
-    </div>
-    <div class="results-grid" id="resultsPodiumGrid">
-      <!-- Generated dynamically based on exact finish order -->
-      <div class="result-box" id="resBox1">
-        <div class="result-rank" id="resRank1">Rank --</div>
-        <div class="result-name" id="resName1">Player</div>
-        <div class="result-time" id="resTime1">--</div>
-        <div style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; margin-top: 4px;" id="resDelta1">--</div>
-      </div>
-      <div class="result-box" id="resBox2">
-        <div class="result-rank" id="resRank2">Rank --</div>
-        <div class="result-name" id="resName2">Rival 1</div>
-        <div class="result-time" id="resTime2">4.70s</div>
-        <div style="font-size: 0.75rem; font-weight: 700; color: #38bdf8; margin-top: 4px;" id="resDelta2">Standard Pacesetter</div>
-      </div>
-      <div class="result-box" id="resBox3">
-        <div class="result-rank" id="resRank3">Rank --</div>
-        <div class="result-name" id="resName3">Rival 2</div>
-        <div class="result-time" id="resTime3">5.20s</div>
-        <div style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; margin-top: 4px;" id="resDelta3">+0.30s behind Rival 1</div>
+
+      <!-- Gamer Modal Actions -->
+      <div class="gamer-modal-actions">
+        <button class="gamer-btn-close" id="modalCloseBtn">✕ Close & View Track</button>
+        <button class="gamer-btn-primary" id="resultsResetBtn">🔥 RACE AGAIN 🔥</button>
       </div>
     </div>
   </div>
@@ -1436,22 +1625,33 @@
 
       startCelebration() {
         this.celebrationActive = true;
-        const colors = ['#facc15', '#ef4444', '#38bdf8', '#10b981', '#ec4899', '#f97316', '#a855f7', '#ffffff', '#fbbf24'];
+        const ribbonPalette = [
+          { front: '#facc15', back: '#b45309' }, // Gold
+          { front: '#38bdf8', back: '#0369a1' }, // Electric Cyan
+          { front: '#f43f5e', back: '#9f1239' }, // Neon Ruby
+          { front: '#34d399', back: '#047857' }, // Emerald
+          { front: '#c084fc', back: '#7e22ce' }, // Vivid Purple
+          { front: '#fb923c', back: '#c2410c' }, // Radiant Orange
+          { front: '#ffffff', back: '#cbd5e1' }  // Shimmering White
+        ];
 
-        // Spawn 260 pieces of cascading celebratory shower (confetti ribbons, circles & golden flakes)
-        for (let i = 0; i < 260; i++) {
+        // Spawn 380 pieces of grand cascading victory ribbons, stars & confetti shower
+        for (let i = 0; i < 380; i++) {
+          const pal = ribbonPalette[Math.floor(Math.random() * ribbonPalette.length)];
           this.confetti.push({
             x: Math.random() * this.canvas.width,
-            y: -10 - Math.random() * 260,
-            vx: (Math.random() - 0.5) * 6,
-            vy: 2.5 + Math.random() * 4.5,
-            size: 6 + Math.random() * 10,
-            color: colors[Math.floor(Math.random() * colors.length)],
+            y: -20 - Math.random() * 350,
+            vx: (Math.random() - 0.5) * 5,
+            vy: 2.2 + Math.random() * 4.8,
+            width: 7 + Math.random() * 8,
+            length: 18 + Math.random() * 26,
+            frontColor: pal.front,
+            backColor: pal.back,
             rot: Math.random() * Math.PI * 2,
-            vrot: (Math.random() - 0.5) * 0.25,
-            wobble: Math.random() * Math.PI * 2,
-            wobbleSpeed: 0.05 + Math.random() * 0.08,
-            shape: Math.random() > 0.4 ? (Math.random() > 0.5 ? 'ribbon' : 'rect') : 'circle'
+            vrot: (Math.random() - 0.5) * 0.15,
+            twist: Math.random() * Math.PI * 2,
+            vtwist: 0.06 + Math.random() * 0.1,
+            shape: Math.random() > 0.35 ? 'ribbon' : (Math.random() > 0.5 ? 'star' : 'circle')
           });
         }
 
@@ -1536,17 +1736,17 @@
           this.ctx.stroke();
         }
 
-        // Draw Confetti Shower
+        // Draw Exaggerated 3D Winning Ribbons & Confetti Shower
         for (let i = this.confetti.length - 1; i >= 0; i--) {
           const c = this.confetti[i];
-          c.wobble += c.wobbleSpeed || 0.06;
-          c.x += c.vx + Math.sin(c.wobble) * 1.5;
+          c.twist = (c.twist || 0) + (c.vtwist || 0.08);
+          c.x += c.vx + Math.sin(c.twist) * 2;
           c.y += c.vy;
           c.rot += c.vrot;
 
-          if (c.y > this.canvas.height + 20) {
+          if (c.y > this.canvas.height + 30) {
             if (this.celebrationActive) {
-              c.y = -15;
+              c.y = -20;
               c.x = Math.random() * this.canvas.width;
             } else {
               this.confetti.splice(i, 1);
@@ -1557,14 +1757,30 @@
           this.ctx.save();
           this.ctx.translate(c.x, c.y);
           this.ctx.rotate(c.rot);
-          this.ctx.fillStyle = c.color;
+
+          // 3D perspective ribbon flip
+          const twistCos = Math.cos(c.twist);
+          const isFront = twistCos > 0;
+          this.ctx.fillStyle = isFront ? (c.frontColor || '#facc15') : (c.backColor || '#b45309');
+
           if (c.shape === 'ribbon') {
-            this.ctx.fillRect(-c.size * 0.6, -c.size * 0.15, c.size * 1.2, c.size * 0.3);
-          } else if (c.shape === 'rect') {
-            this.ctx.fillRect(-c.size * 0.5, -c.size * 0.3, c.size, c.size * 0.6);
-          } else {
+            // Curving 3D ribbon tape
+            const currentW = Math.max(1.5, Math.abs(twistCos) * c.width);
+            this.ctx.fillRect(-currentW * 0.5, -c.length * 0.5, currentW, c.length);
+          } else if (c.shape === 'star') {
+            // 5-pointed golden star
             this.ctx.beginPath();
-            this.ctx.arc(0, 0, c.size * 0.45, 0, Math.PI * 2);
+            const r = (c.width || 8) * 0.6;
+            for (let s = 0; s < 5; s++) {
+              this.ctx.lineTo(Math.cos((18 + s * 72) * Math.PI / 180) * r, -Math.sin((18 + s * 72) * Math.PI / 180) * r);
+              this.ctx.lineTo(Math.cos((54 + s * 72) * Math.PI / 180) * (r * 0.45), -Math.sin((54 + s * 72) * Math.PI / 180) * (r * 0.45));
+            }
+            this.ctx.closePath();
+            this.ctx.fill();
+          } else {
+            // Shimmering circle disc
+            this.ctx.beginPath();
+            this.ctx.arc(0, 0, (c.width || 6) * 0.5, 0, Math.PI * 2);
             this.ctx.fill();
           }
           this.ctx.restore();
@@ -1706,6 +1922,15 @@
         const resultsResetBtn = document.getElementById('resultsResetBtn');
         if (resultsResetBtn) {
           resultsResetBtn.addEventListener('click', () => this.resetRace());
+        }
+
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+        if (modalCloseBtn) {
+          modalCloseBtn.addEventListener('click', () => {
+            this.resultsPanel.classList.remove('visible');
+            const toast = document.getElementById('cheetahToast');
+            if (toast) toast.classList.remove('show');
+          });
         }
 
         // Dedicated Reset Upgrades Button (Clear All back to $0 Standard Horse)
