@@ -1708,26 +1708,16 @@
       }
 
       updateRacerVisuals() {
+        const spec = this.getCurrentComboSpec();
         if (this.state.animal === 'cheetah') {
           this.sprite1.innerHTML = renderCheetahSVG();
-          this.racerTitle.textContent = 'Agile Cheetah';
+          this.racerTitle.textContent = 'Agile Cheetah ($50k)';
           this.racerTitle.style.color = '#facc15';
         } else {
           this.sprite1.innerHTML = renderHorseSVG('#8b5cf6', 1, this.state);
-          let title = 'Standard Horse';
-          if (this.state.engine && this.state.harness && this.state.coach && this.state.food) {
-            title = 'Horse (All Equipped)';
-          } else if (this.state.engine) {
-            title = 'Horse (Turbo V8)';
-          } else if (this.state.harness) {
-            title = 'Horse (Cyber Harness)';
-          } else if (this.state.coach) {
-            title = 'Horse (Agile Guided)';
-          } else if (this.state.food) {
-            title = 'Horse (Bio-Powered)';
-          }
-          this.racerTitle.textContent = title;
-          this.racerTitle.style.color = '#a78bfa';
+          this.racerTitle.textContent = spec.name + ' ($' + (spec.spend / 1000) + 'k)';
+          // Green if winning build (<= Rank 4: beats Rival 1), yellow/red if losing
+          this.racerTitle.style.color = spec.rank <= 4 ? '#4ade80' : '#f87171';
         }
       }
 
@@ -1902,8 +1892,9 @@
           if (toast) toast.classList.add('show');
         }
 
+        const spec = this.getCurrentComboSpec();
         document.getElementById('resultHeadline').textContent = headline;
-        document.getElementById('resName1').textContent = this.racerTitle.textContent;
+        document.getElementById('resName1').textContent = spec.name;
         document.getElementById('resTime1').textContent = time1 + 's';
         this.resultsPanel.classList.add('visible');
       }
