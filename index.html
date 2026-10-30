@@ -206,30 +206,72 @@
       );
     }
 
-    /* Finish Arch */
+    /* Grand Checkered Finish Line & Golden Derby Arch */
     .finish-line-zone {
       position: absolute;
-      right: 70px;
+      right: 75px;
       top: 0;
       bottom: 0;
-      width: 32px;
-      border-right: 4px dashed #ffffff;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(255,255,255,0.2) 0px,
-        rgba(255,255,255,0.2) 10px,
-        transparent 10px,
-        transparent 20px
-      );
+      width: 28px;
+      background-image: 
+        linear-gradient(45deg, #0f172a 25%, transparent 25%), 
+        linear-gradient(-45deg, #0f172a 25%, transparent 25%), 
+        linear-gradient(45deg, transparent 75%, #0f172a 75%), 
+        linear-gradient(-45deg, transparent 75%, #0f172a 75%);
+      background-size: 14px 14px;
+      background-position: 0 0, 0 7px, 7px -7px, -7px 0px;
+      background-color: #ffffff;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7), inset 0 0 6px rgba(0,0,0,0.4);
       z-index: 10;
+      border-left: 3px solid #facc15;
+      border-right: 3px solid #facc15;
     }
 
-    .horseshoe-arch {
+    .grand-finish-arch {
       position: absolute;
-      right: 45px;
-      top: -12px;
-      z-index: 30;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+      right: 18px;
+      top: -24px;
+      bottom: 0;
+      width: 140px;
+      z-index: 35;
+      pointer-events: none;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.65));
+    }
+
+    /* Celebration Banner */
+    .celebration-toast {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%) scale(0.85);
+      background: linear-gradient(135deg, #facc15, #fb923c, #ef4444);
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 900;
+      padding: 10px 24px;
+      border-radius: 9999px;
+      box-shadow: 0 0 35px rgba(250, 204, 21, 0.9), 0 8px 25px rgba(0,0,0,0.6);
+      border: 3px solid #fef08a;
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    }
+
+    .celebration-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) scale(1.05);
+      animation: toastBounce 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes toastBounce {
+      0% { transform: translateX(-50%) scale(1.02) translateY(0); box-shadow: 0 0 25px rgba(250, 204, 21, 0.7); }
+      100% { transform: translateX(-50%) scale(1.08) translateY(-4px); box-shadow: 0 0 45px rgba(239, 68, 68, 0.95); }
     }
 
     /* Lanes */
@@ -554,17 +596,74 @@
 
     <!-- Derby Field: 3 Lanes -->
     <div class="derby-field" id="derbyField">
-      <!-- Finish line & Golden Horseshoe Arch -->
+      <!-- Grand Checkered Finish Line & Magnificent Derby Arch -->
       <div class="finish-line-zone"></div>
-      <div class="horseshoe-arch">
-        <svg width="70" height="90" viewBox="0 0 100 120">
-          <path d="M 25 110 C 25 40 75 40 75 110" fill="none" stroke="#eab308" stroke-width="20" stroke-linecap="round"/>
-          <path d="M 25 110 C 25 40 75 40 75 110" fill="none" stroke="#fef08a" stroke-width="8" stroke-linecap="round"/>
-          <circle cx="25" cy="85" r="4" fill="#854d0e"/>
-          <circle cx="30" cy="55" r="4" fill="#854d0e"/>
-          <circle cx="70" cy="55" r="4" fill="#854d0e"/>
-          <circle cx="75" cy="85" r="4" fill="#854d0e"/>
-          <text x="50" y="28" font-size="14" font-weight="900" fill="#fef08a" text-anchor="middle">FINISH</text>
+      
+      <!-- Cheetah First Principles Celebration Toast -->
+      <div class="celebration-toast" id="cheetahToast">
+        <span>🐆</span> <span>HOORAY! FIRST PRINCIPLES CHAMPION!</span> <span>🎉</span>
+      </div>
+
+      <div class="grand-finish-arch">
+        <svg width="140" height="350" viewBox="0 0 140 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goldPillarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#ca8a04"/>
+              <stop offset="30%" stop-color="#facc15"/>
+              <stop offset="70%" stop-color="#fef08a"/>
+              <stop offset="100%" stop-color="#a16207"/>
+            </linearGradient>
+            <linearGradient id="horseshoeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fef08a"/>
+              <stop offset="25%" stop-color="#facc15"/>
+              <stop offset="60%" stop-color="#eab308"/>
+              <stop offset="100%" stop-color="#854d0e"/>
+            </linearGradient>
+            <linearGradient id="bannerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#dc2626"/>
+              <stop offset="100%" stop-color="#991b1b"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Left Majestic Pillar -->
+          <rect x="18" y="100" width="16" height="240" rx="3" fill="url(#goldPillarGrad)" stroke="#713f12" stroke-width="2"/>
+          <rect x="14" y="325" width="24" height="20" rx="4" fill="#854d0e" stroke="#facc15" stroke-width="2"/>
+          <circle cx="26" cy="95" r="10" fill="url(#goldPillarGrad)" stroke="#713f12" stroke-width="2"/>
+          <!-- Glowing Lantern on Left Pillar -->
+          <circle cx="26" cy="95" r="5" fill="#fef08a"/>
+
+          <!-- Right Majestic Pillar -->
+          <rect x="106" y="100" width="16" height="240" rx="3" fill="url(#goldPillarGrad)" stroke="#713f12" stroke-width="2"/>
+          <rect x="102" y="325" width="24" height="20" rx="4" fill="#854d0e" stroke="#facc15" stroke-width="2"/>
+          <circle cx="114" cy="95" r="10" fill="url(#goldPillarGrad)" stroke="#713f12" stroke-width="2"/>
+          <!-- Glowing Lantern on Right Pillar -->
+          <circle cx="114" cy="95" r="5" fill="#fef08a"/>
+
+          <!-- Grand Golden Horseshoe Arch -->
+          <path d="M 26 100 C 26 15 114 15 114 100" fill="none" stroke="url(#horseshoeGrad)" stroke-width="24" stroke-linecap="round"/>
+          <path d="M 26 100 C 26 22 114 22 114 100" fill="none" stroke="#fef08a" stroke-width="6" stroke-linecap="round" opacity="0.85"/>
+
+          <!-- Golden Horseshoe Rivets -->
+          <circle cx="32" cy="75" r="4.5" fill="#713f12"/>
+          <circle cx="32" cy="75" r="2.5" fill="#fef08a"/>
+          <circle cx="44" cy="45" r="4.5" fill="#713f12"/>
+          <circle cx="44" cy="45" r="2.5" fill="#fef08a"/>
+          <circle cx="70" cy="30" r="4.5" fill="#713f12"/>
+          <circle cx="70" cy="30" r="2.5" fill="#fef08a"/>
+          <circle cx="96" cy="45" r="4.5" fill="#713f12"/>
+          <circle cx="96" cy="45" r="2.5" fill="#fef08a"/>
+          <circle cx="108" cy="75" r="4.5" fill="#713f12"/>
+          <circle cx="108" cy="75" r="2.5" fill="#fef08a"/>
+
+          <!-- 3D Ribbon Banner: FINISH LINE -->
+          <path d="M 12 75 L 128 75 L 122 102 L 18 102 Z" fill="url(#bannerGrad)" stroke="#facc15" stroke-width="2.5"/>
+          <polygon points="12,75 2,88 12,102 18,102 18,75" fill="#7f1d1d"/>
+          <polygon points="128,75 138,88 128,102 122,102 122,75" fill="#7f1d1d"/>
+          <text x="70" y="94" font-size="14" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1">★ FINISH LINE ★</text>
+
+          <!-- Checkered Racing Flags at the Apex -->
+          <text x="38" y="24" font-size="18">🏁</text>
+          <text x="86" y="24" font-size="18">🏁</text>
         </svg>
       </div>
 
@@ -950,6 +1049,85 @@
           osc.stop(now + 1.2);
         });
       }
+
+      playCheetahHooray() {
+        if (this.isMuted) return;
+        this.init();
+        const now = this.ctx.currentTime;
+
+        // 1. Triumphant Ascending Brass Fanfare (C5 -> E5 -> G5 -> C6)
+        const brassNotes = [
+          { f: 523.25, t: 0.0, d: 0.2 },
+          { f: 659.25, t: 0.18, d: 0.2 },
+          { f: 783.99, t: 0.36, d: 0.25 },
+          { f: 1046.50, t: 0.58, d: 1.4 }
+        ];
+        brassNotes.forEach(n => {
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(n.f, now + n.t);
+          g.gain.setValueAtTime(0.14, now + n.t);
+          g.gain.exponentialRampToValueAtTime(0.001, now + n.t + n.d);
+          osc.connect(g);
+          g.connect(this.ctx.destination);
+          osc.start(now + n.t);
+          osc.stop(now + n.t + n.d);
+        });
+
+        // 2. Synthesized "HOO-RAAAAY!" Vocal Formants
+        // Formant F1 (sweeps 380Hz -> 650Hz) and F2 (sweeps 850Hz -> 1800Hz)
+        [380, 850].forEach((baseFreq, idx) => {
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          const filter = this.ctx.createBiquadFilter();
+          
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(baseFreq * 0.5, now + 0.1);
+          osc.frequency.exponentialRampToValueAtTime(baseFreq * 0.7, now + 0.9);
+
+          filter.type = 'bandpass';
+          filter.Q.value = 4.0;
+          filter.frequency.setValueAtTime(baseFreq, now + 0.1);
+          filter.frequency.linearRampToValueAtTime(idx === 0 ? 650 : 1800, now + 0.5);
+          filter.frequency.linearRampToValueAtTime(idx === 0 ? 600 : 1700, now + 1.2);
+
+          g.gain.setValueAtTime(0.001, now + 0.1);
+          g.gain.linearRampToValueAtTime(0.18, now + 0.3);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
+
+          osc.connect(filter);
+          filter.connect(g);
+          g.connect(this.ctx.destination);
+          osc.start(now + 0.1);
+          osc.stop(now + 1.4);
+        });
+
+        // 3. Cheering Crowd Clapping & Noise Swell
+        const bufferSize = this.ctx.sampleRate * 1.5;
+        const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          output[i] = (Math.random() * 2 - 1) * Math.exp(-i / (this.ctx.sampleRate * 0.8));
+        }
+        const whiteNoise = this.ctx.createBufferSource();
+        whiteNoise.buffer = noiseBuffer;
+
+        const noiseFilter = this.ctx.createBiquadFilter();
+        noiseFilter.type = 'bandpass';
+        noiseFilter.frequency.value = 1200;
+        noiseFilter.Q.value = 1.5;
+
+        const noiseGain = this.ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.01, now + 0.2);
+        noiseGain.gain.linearRampToValueAtTime(0.15, now + 0.5);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
+
+        whiteNoise.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(this.ctx.destination);
+        whiteNoise.start(now + 0.2);
+      }
     }
 
     /* =====================================================================
@@ -1145,6 +1323,9 @@
         this.ctx = canvas.getContext('2d');
         this.flames = [];
         this.sparks = [];
+        this.confetti = [];
+        this.fireworks = [];
+        this.celebrationActive = false;
         this.resize();
         window.addEventListener('resize', () => this.resize());
       }
@@ -1179,6 +1360,61 @@
             decay: 0.15
           });
         }
+      }
+
+      startCelebration() {
+        this.celebrationActive = true;
+        const colors = ['#facc15', '#ef4444', '#38bdf8', '#10b981', '#ec4899', '#f97316', '#a855f7'];
+
+        // Spawn 140 pieces of celebratory confetti
+        for (let i = 0; i < 140; i++) {
+          this.confetti.push({
+            x: Math.random() * this.canvas.width,
+            y: -10 - Math.random() * 200,
+            vx: (Math.random() - 0.5) * 5,
+            vy: 2 + Math.random() * 4,
+            size: 7 + Math.random() * 8,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rot: Math.random() * Math.PI * 2,
+            vrot: (Math.random() - 0.5) * 0.2,
+            shape: Math.random() > 0.4 ? 'rect' : 'circle'
+          });
+        }
+
+        // Spawn Firework Bursts near the Finish Line
+        const burstPoints = [
+          { x: this.canvas.width - 90, y: 70 },
+          { x: this.canvas.width - 160, y: 120 },
+          { x: this.canvas.width - 240, y: 80 },
+          { x: this.canvas.width - 120, y: 160 }
+        ];
+
+        burstPoints.forEach((bp, pIdx) => {
+          setTimeout(() => {
+            if (!this.celebrationActive) return;
+            const bColor = colors[Math.floor(Math.random() * colors.length)];
+            for (let i = 0; i < 28; i++) {
+              const angle = (Math.PI * 2 / 28) * i;
+              const spd = 3 + Math.random() * 4;
+              this.fireworks.push({
+                x: bp.x,
+                y: bp.y,
+                vx: Math.cos(angle) * spd,
+                vy: Math.sin(angle) * spd,
+                color: bColor,
+                life: 1.0,
+                decay: 0.02 + Math.random() * 0.02,
+                size: 3 + Math.random() * 3
+              });
+            }
+          }, pIdx * 250);
+        });
+      }
+
+      stopCelebration() {
+        this.celebrationActive = false;
+        this.confetti = [];
+        this.fireworks = [];
       }
 
       updateAndDraw() {
@@ -1224,11 +1460,65 @@
           this.ctx.lineTo(s.x + s.dx, s.y + s.dy);
           this.ctx.stroke();
         }
+
+        // Draw Confetti
+        for (let i = this.confetti.length - 1; i >= 0; i--) {
+          const c = this.confetti[i];
+          c.x += c.vx;
+          c.y += c.vy;
+          c.rot += c.vrot;
+
+          if (c.y > this.canvas.height + 20) {
+            if (this.celebrationActive) {
+              c.y = -10;
+              c.x = Math.random() * this.canvas.width;
+            } else {
+              this.confetti.splice(i, 1);
+              continue;
+            }
+          }
+
+          this.ctx.save();
+          this.ctx.translate(c.x, c.y);
+          this.ctx.rotate(c.rot);
+          this.ctx.fillStyle = c.color;
+          if (c.shape === 'rect') {
+            this.ctx.fillRect(-c.size * 0.5, -c.size * 0.25, c.size, c.size * 0.5);
+          } else {
+            this.ctx.beginPath();
+            this.ctx.arc(0, 0, c.size * 0.4, 0, Math.PI * 2);
+            this.ctx.fill();
+          }
+          this.ctx.restore();
+        }
+
+        // Draw Fireworks
+        for (let i = this.fireworks.length - 1; i >= 0; i--) {
+          const f = this.fireworks[i];
+          f.x += f.vx;
+          f.y += f.vy;
+          f.vy += 0.08; // subtle gravity
+          f.life -= f.decay;
+
+          if (f.life <= 0) {
+            this.fireworks.splice(i, 1);
+            continue;
+          }
+
+          this.ctx.save();
+          this.ctx.globalAlpha = Math.max(0, f.life);
+          this.ctx.fillStyle = f.color;
+          this.ctx.beginPath();
+          this.ctx.arc(f.x, f.y, f.size * f.life, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.restore();
+        }
       }
 
       clear() {
         this.flames = [];
         this.sparks = [];
+        this.stopCelebration();
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       }
     }
@@ -1604,6 +1894,14 @@
           headline = 'THIRD PLACE: Competitors Finished Ahead.';
         }
 
+        // When Cheetah triumphs: trigger Hooray fanfare, banner and confetti celebration!
+        if (this.state.animal === 'cheetah') {
+          this.audio.playCheetahHooray();
+          this.fx.startCelebration();
+          const toast = document.getElementById('cheetahToast');
+          if (toast) toast.classList.add('show');
+        }
+
         document.getElementById('resultHeadline').textContent = headline;
         document.getElementById('resName1').textContent = this.racerTitle.textContent;
         document.getElementById('resTime1').textContent = time1 + 's';
@@ -1616,6 +1914,8 @@
         this.audio.stopEngineHum();
         this.audio.stopHarnessCrackle();
         this.fx.clear();
+        const toast = document.getElementById('cheetahToast');
+        if (toast) toast.classList.remove('show');
         this.racer1.style.left = '20px';
         this.racer1.style.transform = 'none';
         this.racer2.style.left = '20px';
