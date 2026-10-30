@@ -537,6 +537,7 @@
     </div>
     <div class="action-group">
       <button class="btn btn-secondary" id="soundBtn" title="Toggle Sound">🔊 Sound ON</button>
+      <button class="btn btn-secondary" id="resetTrackBtn" title="Reset Racers to Start">↺ Reset Track</button>
       <button class="btn btn-primary" id="startBtn">🏁 Start Race</button>
     </div>
   </div>
@@ -658,7 +659,10 @@
 
   <!-- Results Board -->
   <div class="results-panel" id="resultsPanel">
-    <div style="font-size: 1.1rem; font-weight: 800; color: #facc15; margin-bottom: 8px;" id="resultHeadline">Race Finish Recorded</div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <div style="font-size: 1.1rem; font-weight: 800; color: #facc15;" id="resultHeadline">Race Finish Recorded</div>
+      <button class="btn btn-secondary" id="resultsResetBtn" style="padding: 6px 14px; font-size: 0.82rem;">↺ Reset Track</button>
+    </div>
     <div class="results-grid">
       <div class="result-box" id="resBox1">
         <div class="result-rank">Player (Lane 1)</div>
@@ -682,7 +686,10 @@
   <section class="shop-section">
     <div class="shop-title">
       <span>PROPULSION & TACTICAL UPGRADE BAY</span>
-      <span style="font-size: 0.82rem; color: #94a3b8; font-weight: 400;">Freely configure upgrades to test race outcomes</span>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <span style="font-size: 0.82rem; color: #94a3b8; font-weight: 400;">Freely configure upgrades to test race outcomes</span>
+        <button class="btn btn-secondary" id="resetUpgradesBtn" style="padding: 6px 14px; font-size: 0.82rem; background: #334155;">↺ Reset Upgrades ($0)</button>
+      </div>
     </div>
 
     <div class="cards-grid">
@@ -1321,6 +1328,34 @@
             this.resetRace();
           }
         });
+
+        // Dedicated Reset Track Buttons
+        const resetTrackBtn = document.getElementById('resetTrackBtn');
+        if (resetTrackBtn) {
+          resetTrackBtn.addEventListener('click', () => this.resetRace());
+        }
+
+        const resultsResetBtn = document.getElementById('resultsResetBtn');
+        if (resultsResetBtn) {
+          resultsResetBtn.addEventListener('click', () => this.resetRace());
+        }
+
+        // Dedicated Reset Upgrades Button (Clear All back to $0 Standard Horse)
+        const resetUpgradesBtn = document.getElementById('resetUpgradesBtn');
+        if (resetUpgradesBtn) {
+          resetUpgradesBtn.addEventListener('click', () => {
+            if (this.racing) this.resetRace();
+            this.state.animal = 'horse';
+            this.state.engine = false;
+            this.state.harness = false;
+            this.state.coach = false;
+            this.state.food = false;
+            this.syncShopUI();
+            this.updateRacerVisuals();
+            this.updateSpendDisplay();
+            this.resetRace();
+          });
+        }
 
         // Sound Button
         this.soundBtn.addEventListener('click', () => {
