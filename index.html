@@ -756,27 +756,34 @@
     </div>
   </div>
 
-  <!-- Results Board -->
+  <!-- Results Board with Podiums & Exact Timing Splits -->
   <div class="results-panel" id="resultsPanel">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-      <div style="font-size: 1.1rem; font-weight: 800; color: #facc15;" id="resultHeadline">Race Finish Recorded</div>
+      <div>
+        <div style="font-size: 1.15rem; font-weight: 900; color: #facc15;" id="resultHeadline">Race Finish Recorded</div>
+        <div style="font-size: 0.82rem; color: #94a3b8;" id="resultSubheadline">Timing comparison across all 3 racers</div>
+      </div>
       <button class="btn btn-secondary" id="resultsResetBtn" style="padding: 6px 14px; font-size: 0.82rem;">↺ Reset Track</button>
     </div>
-    <div class="results-grid">
+    <div class="results-grid" id="resultsPodiumGrid">
+      <!-- Generated dynamically based on exact finish order -->
       <div class="result-box" id="resBox1">
-        <div class="result-rank">Player (Lane 1)</div>
-        <div class="result-name" id="resName1">Racer #1</div>
+        <div class="result-rank" id="resRank1">Rank --</div>
+        <div class="result-name" id="resName1">Player</div>
         <div class="result-time" id="resTime1">--</div>
+        <div style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; margin-top: 4px;" id="resDelta1">--</div>
       </div>
       <div class="result-box" id="resBox2">
-        <div class="result-rank">Rival 1 (Lane 2)</div>
-        <div class="result-name">Pacesetter #2</div>
-        <div class="result-time" id="resTime2">5.40s</div>
+        <div class="result-rank" id="resRank2">Rank --</div>
+        <div class="result-name" id="resName2">Rival 1</div>
+        <div class="result-time" id="resTime2">4.70s</div>
+        <div style="font-size: 0.75rem; font-weight: 700; color: #38bdf8; margin-top: 4px;" id="resDelta2">Standard Pacesetter</div>
       </div>
       <div class="result-box" id="resBox3">
-        <div class="result-rank">Rival 2 (Lane 3)</div>
-        <div class="result-name">Challenger #3</div>
-        <div class="result-time" id="resTime3">6.20s</div>
+        <div class="result-rank" id="resRank3">Rank --</div>
+        <div class="result-name" id="resName3">Rival 2</div>
+        <div class="result-time" id="resTime3">5.00s</div>
+        <div style="font-size: 0.75rem; font-weight: 700; color: #94a3b8; margin-top: 4px;" id="resDelta3">+0.30s behind Rival 1</div>
       </div>
     </div>
   </div>
@@ -1136,22 +1143,22 @@
      * ===================================================================== */
     const COMBO_SPECS = [
       { rank: 1,  name: "Cheetah",               engine: false, harness: false, coach: false, food: false, animal: "cheetah", targetT: 3.40, spend: 50000 },
-      { rank: 2,  name: "Coach Only",            engine: false, harness: false, coach: true,  food: false, animal: "horse",   targetT: 4.70, spend: 250000 },
-      { rank: 3,  name: "Food Only",             engine: false, harness: false, coach: false, food: true,  animal: "horse",   targetT: 5.05, spend: 200000 },
-      { rank: 4,  name: "Coach + Food",          engine: false, harness: false, coach: true,  food: true,  animal: "horse",   targetT: 5.30, spend: 450000 },
-      { rank: 5,  name: "Coach + Harness + Food",engine: false, harness: true,  coach: true,  food: true,  animal: "horse",   targetT: 5.65, spend: 850000 },
-      { rank: 6,  name: "Coach + Harness",       engine: false, harness: true,  coach: true,  food: false, animal: "horse",   targetT: 5.95, spend: 650000 },
-      { rank: 7,  name: "Harness + Food",        engine: false, harness: true,  coach: false, food: true,  animal: "horse",   targetT: 6.30, spend: 600000 },
-      { rank: 8,  name: "Standard Horse",        engine: false, harness: false, coach: false, food: false, animal: "horse",   targetT: 6.55, spend: 0 },
-      { rank: 9,  name: "Harness Only",          engine: false, harness: true,  coach: false, food: false, animal: "horse",   targetT: 6.80, spend: 400000 },
-      { rank: 10, name: "All Equipped",          engine: true,  harness: true,  coach: true,  food: true,  animal: "horse",   targetT: 7.10, spend: 1350000 },
-      { rank: 11, name: "Engine + Food + Coach", engine: true,  harness: false, coach: true,  food: true,  animal: "horse",   targetT: 7.45, spend: 950000 },
-      { rank: 12, name: "Engine + Harness + Coach", engine: true, harness: true, coach: true, food: false, animal: "horse",  targetT: 7.85, spend: 1150000 },
-      { rank: 13, name: "Engine + Coach",        engine: true,  harness: false, coach: true,  food: false, animal: "horse",   targetT: 8.20, spend: 750000 },
-      { rank: 14, name: "Engine + Food",         engine: true,  harness: false, coach: false, food: true,  animal: "horse",   targetT: 8.60, spend: 700000 },
-      { rank: 15, name: "Engine + Harness + Food", engine: true, harness: true, coach: false, food: true,  animal: "horse",  targetT: 8.95, spend: 1100000 },
-      { rank: 16, name: "Engine + Harness",      engine: true,  harness: true,  coach: false, food: false, animal: "horse",   targetT: 9.35, spend: 900000 },
-      { rank: 17, name: "Engine Only",           engine: true,  harness: false, coach: false, food: false, animal: "horse",   targetT: 9.80, spend: 500000 }
+      { rank: 2,  name: "Coach Only",            engine: false, harness: false, coach: true,  food: false, animal: "horse",   targetT: 5.20, spend: 250000 },
+      { rank: 3,  name: "Food Only",             engine: false, harness: false, coach: false, food: true,  animal: "horse",   targetT: 5.45, spend: 200000 },
+      { rank: 4,  name: "Coach + Food",          engine: false, harness: false, coach: true,  food: true,  animal: "horse",   targetT: 5.65, spend: 450000 },
+      { rank: 5,  name: "Coach + Harness + Food",engine: false, harness: true,  coach: true,  food: true,  animal: "horse",   targetT: 5.90, spend: 850000 },
+      { rank: 6,  name: "Coach + Harness",       engine: false, harness: true,  coach: true,  food: false, animal: "horse",   targetT: 6.15, spend: 650000 },
+      { rank: 7,  name: "Harness + Food",        engine: false, harness: true,  coach: false, food: true,  animal: "horse",   targetT: 6.45, spend: 600000 },
+      { rank: 8,  name: "Standard Horse",        engine: false, harness: false, coach: false, food: false, animal: "horse",   targetT: 6.75, spend: 0 },
+      { rank: 9,  name: "Harness Only",          engine: false, harness: true,  coach: false, food: false, animal: "horse",   targetT: 7.05, spend: 400000 },
+      { rank: 10, name: "All Equipped",          engine: true,  harness: true,  coach: true,  food: true,  animal: "horse",   targetT: 7.35, spend: 1350000 },
+      { rank: 11, name: "Engine + Food + Coach", engine: true,  harness: false, coach: true,  food: true,  animal: "horse",   targetT: 7.70, spend: 950000 },
+      { rank: 12, name: "Engine + Harness + Coach", engine: true, harness: true, coach: true, food: false, animal: "horse",  targetT: 8.10, spend: 1150000 },
+      { rank: 13, name: "Engine + Coach",        engine: true,  harness: false, coach: true,  food: false, animal: "horse",   targetT: 8.45, spend: 750000 },
+      { rank: 14, name: "Engine + Food",         engine: true,  harness: false, coach: false, food: true,  animal: "horse",   targetT: 8.85, spend: 700000 },
+      { rank: 15, name: "Engine + Harness + Food", engine: true, harness: true, coach: false, food: true,  animal: "horse",  targetT: 9.20, spend: 1100000 },
+      { rank: 16, name: "Engine + Harness",      engine: true,  harness: true,  coach: false, food: false, animal: "horse",   targetT: 9.55, spend: 900000 },
+      { rank: 17, name: "Engine Only",           engine: true,  harness: false, coach: false, food: false, animal: "horse",   targetT: 9.95, spend: 500000 }
     ];
 
     /* =====================================================================
@@ -1755,8 +1762,8 @@
 
         const spec = this.getCurrentComboSpec();
         const duration1 = spec.targetT;
-        const duration2 = 5.40; // Rival 1
-        const duration3 = 6.20; // Rival 2
+        const duration2 = 4.70; // Rival 1: 4.70s (Beats fastest horse by 0.50s)
+        const duration3 = 5.00; // Rival 2: 5.00s (Beats fastest horse by 0.20s)
 
         const trackWidth = document.getElementById('derbyField').clientWidth;
         const startX = 20;
@@ -1870,32 +1877,69 @@
         this.audio.stopEngineHum();
         this.audio.stopHarnessCrackle();
 
-        // Show Results
         const t1Num = parseFloat(time1);
-        const t2Num = 5.40;
-        const t3Num = 6.20;
+        const t2Num = 4.70; // Rival 1
+        const t3Num = 5.00; // Rival 2
+        const spec = this.getCurrentComboSpec();
 
-        let headline = 'Race Finish Recorded!';
-        if (t1Num < t2Num) {
-          headline = '🏆 VICTORY: You Outpaced All Competitors!';
-        } else if (t1Num < t3Num) {
-          headline = '🥈 SECOND PLACE: Ahead of Challenger #3!';
-        } else {
-          headline = 'THIRD PLACE: Competitors Finished Ahead.';
-        }
+        // Freezes HUD clock on Player's final time
+        this.raceTimer.textContent = time1 + 's';
 
-        // When Cheetah triumphs: trigger Hooray fanfare, banner and confetti celebration!
+        let headline = '';
+        let subheadline = '';
+
         if (this.state.animal === 'cheetah') {
+          // Cheetah wins massively!
+          headline = '🏆 1ST PLACE: AGILE CHEETAH WON MASSIVELY!';
+          subheadline = 'First Principles Victory: 3.40s (-1.30s ahead of Rival #1 @ 4.70s)!';
           this.audio.playCheetahHooray();
           this.fx.startCelebration();
           const toast = document.getElementById('cheetahToast');
           if (toast) toast.classList.add('show');
+
+          document.getElementById('resRank1').textContent = '🥇 1ST PLACE (WINNER)';
+          document.getElementById('resRank1').style.color = '#facc15';
+          document.getElementById('resName1').textContent = spec.name;
+          document.getElementById('resTime1').textContent = time1 + 's';
+          document.getElementById('resDelta1').textContent = 'Massive Victory: -1.30s ahead of competition!';
+          document.getElementById('resDelta1').style.color = '#4ade80';
+
+          document.getElementById('resRank2').textContent = '🥈 2ND PLACE';
+          document.getElementById('resRank2').style.color = '#94a3b8';
+          document.getElementById('resTime2').textContent = '4.70s';
+          document.getElementById('resDelta2').textContent = '+1.30s behind Cheetah';
+
+          document.getElementById('resRank3').textContent = '🥉 3RD PLACE';
+          document.getElementById('resRank3').style.color = '#94a3b8';
+          document.getElementById('resTime3').textContent = '5.00s';
+          document.getElementById('resDelta3').textContent = '+1.60s behind Cheetah';
+        } else {
+          // All horse configurations lose to Rival 1 (4.70s) by at least 0.50s!
+          const gapRival1 = (t1Num - t2Num).toFixed(2);
+          const gapRival2 = (t1Num - t3Num).toFixed(2);
+          headline = `❌ 3RD PLACE: Defeated by ${gapRival1}s`;
+          subheadline = `Even with ${spec.name}, the horse cannot beat the competition. Redesign the runner to win!`;
+
+          document.getElementById('resRank1').textContent = '🥉 3RD PLACE';
+          document.getElementById('resRank1').style.color = '#f87171';
+          document.getElementById('resName1').textContent = spec.name;
+          document.getElementById('resTime1').textContent = time1 + 's';
+          document.getElementById('resDelta1').textContent = `+${gapRival1}s behind Rival 1 (+${gapRival2}s behind Rival 2)`;
+          document.getElementById('resDelta1').style.color = '#f87171';
+
+          document.getElementById('resRank2').textContent = '🥇 1ST PLACE';
+          document.getElementById('resRank2').style.color = '#facc15';
+          document.getElementById('resTime2').textContent = '4.70s';
+          document.getElementById('resDelta2').textContent = 'Pacesetter #2 (Winner)';
+
+          document.getElementById('resRank3').textContent = '🥈 2ND PLACE';
+          document.getElementById('resRank3').style.color = '#cbd5e1';
+          document.getElementById('resTime3').textContent = '5.00s';
+          document.getElementById('resDelta3').textContent = '+0.30s behind Rival 1';
         }
 
-        const spec = this.getCurrentComboSpec();
         document.getElementById('resultHeadline').textContent = headline;
-        document.getElementById('resName1').textContent = spec.name;
-        document.getElementById('resTime1').textContent = time1 + 's';
+        document.getElementById('resultSubheadline').textContent = subheadline;
         this.resultsPanel.classList.add('visible');
       }
 
